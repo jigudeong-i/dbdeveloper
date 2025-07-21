@@ -1,0 +1,727 @@
+
+-- hr 사용자의 전체 테이블 정보
+SELECT * FROM TAB;
+
+-- 부서테이블 전체 데이터 조회
+SELECT * FROM departments;      
+
+-- 사원테이블 전체 데이터 조회
+SELECT * FROM employees;
+
+SELECT first_name, last_name, hire_date, salary FROM employees;
+
+select * from employees;
+
+
+ -- 별칭 설정 : 원래 데이터는 그대로고 부르는 방식만 바뀜
+ -- 별칭에 공백, 대소문자 등이 있으면 큰따옴표 써야됨. 
+SELECT DEPARTMENT_ID "Department No", DEPARTMENT_NAME "Department Name" FROM DEPARTMENTS;
+
+-- 연결 연산자 
+select first_name || '의 직급은 ' || JOB_ID ||'입니다' AS 직급 
+from employees;
+
+-- 직원들의 소속 부서번호를 출력하되 중복되지 않게 하라 
+SELECT DEPARTMENT_ID FROM EMPLOYEES;
+SELECT DISTINCT DEPARTMENT_ID FROM EMPLOYEES;
+
+-- 전체 직원 조회 
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY FROM EMPLOYEES;
+
+-- 급여를 3000 이상 받는 직원들만 뽑기
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY FROM EMPLOYEES WHERE SALARY >= 3000;
+
+-- <문제> EMPLOYEES 테이블에서 부서번호가 110번인 직원에 관한 모든 정보만 출력하라.  
+SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID = 110;
+
+-- <문제> EMPLOYEES 테이블에서 급여가 5000미만이 되는 직원의 정보 중에서 사번과 이름, 급여를 출력하라.
+SELECT EMPLOYEE_ID 사원번호, FIRST_NAME 사원명, SALARY 급여, SALARY+1000 인상급여, HIRE_DATE 입사일 
+FROM EMPLOYEES;
+
+SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEES
+WHERE FIRST_NAME = 'Lex';
+
+-- 문제 : 이름이 John 인 사람의 사원번호와 직원명과 업무 ID를 출력하라
+SELECT EMPLOYEE_ID, FIRST_NAME, JOB_ID 
+FROM EMPLOYEES 
+WHERE FIRST_NAME = 'John';
+
+-- 날짜데이터 조회
+SELECT FIRST_NAME, HIRE_DATE 
+FROM EMPLOYEES 
+WHERE HIRE_DATE >= '2008/01/01'; -- 08/01/01 도 가능! 
+
+
+-- 논리 연산자
+
+--<문제>급여가 5000에서 10000이하 직원 정보 출력
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY FROM EMPLOYEES
+WHERE SALARY >= 5000 AND SALARY <= 10000;
+
+--<문제> 사원번호가 134이거나 201이거나 107인 직원 정보 출력
+SELECT EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_ID, JOB_ID
+FROM EMPLOYEES
+WHERE EMPLOYEE_ID = 134 OR EMPLOYEE_ID = 201 OR EMPLOYEE_ID = 107; 
+
+--<문제> 업무ID가 FI_MGR가 아닌 직원
+SELECT EMPLOYEE_ID, FIRST_NAME, PHONE_NUMBER, DEPARTMENT_ID, JOB_ID
+FROM EMPLOYEES
+WHERE NOT JOB_ID = 'FI_MGR';
+
+--<문제> 사원번호가 134이거나 201이거나 107인 직원 중에 성이 
+SELECT EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_ID, JOB_ID
+FROM EMPLOYEES
+WHERE EMPLOYEE_ID = 134 OR EMPLOYEE_ID = 201 OR EMPLOYEE_ID = 107; 
+
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY, DEPARTMENT_ID
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID IN (10,20,30);
+
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY, DEPARTMENT_ID
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID = 10 OR DEPARTMENT_ID = 20 OR DEPARTMENT_ID = 30;
+
+SELECT EMPLOYEE_ID, FIRST_NAME, MANAGER_ID, JOB_ID
+FROM EMPLOYEES
+WHERE JOB_ID IN ('SA_MAN', 'ST_MAN', 'PU_MAN', 'AC_MGR');
+
+
+-- LIKE 연산자 
+-- 사원명에서 K로 시작하는 
+SELECT EMPLOYEE_ID, FIRST_NAME
+FROM EMPLOYEES
+WHERE FIRST_NAME LIKE 'K%'; 
+
+-- 사원명에서 K를 포함하는 
+SELECT EMPLOYEE_ID, FIRST_NAME
+FROM EMPLOYEES
+WHERE FIRST_NAME LIKE '%k%';
+
+-- 대소문자 구분 없이 K 찾기 
+SELECT EMPLOYEE_ID, FIRST_NAME
+FROM EMPLOYEES
+WHERE LOWER(FIRST_NAME) LIKE '%k%';
+
+--핸드폰 번호에서 5번째가 1인 레코드를 조회해라
+SELECT * FROM EMPLOYEES 
+WHERE PHONE_NUMBER LIKE '____1%';
+
+--<문제> 이름에 a를 포함하지 않은 직원의 직원번호, 이름을 출력하라.
+SELECT EMPLOYEE_ID, FIRST_NAME
+FROM EMPLOYEES 
+WHERE FIRST_NAME NOT LIKE '%a%';
+
+
+-- 커미션을 받는 사원
+SELECT EMPLOYEE_ID, FIRST_NAME, COMMISSION_PCT, JOB_ID
+FROM EMPLOYEES
+WHERE COMMISSION_PCT IS NULL;
+
+-- <문제> 자신의 직속상관이 없는 직원의 전체 이름과 직원번호, 업무ID를 출력하라
+SELECT * FROM EMPLOYEES;
+
+SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, JOB_ID
+FROM EMPLOYEES
+WHERE MANAGER_ID IS NULL;
+
+-- <문제> 커미션을 받는 사원만 출력하되 사원번호, 이름, 급여, 수당율, 수당금액(계산식 - 급여*수당율)을 출력하라.
+SELECT EMPLOYEE_ID, FIRST_NAME, SALARY, COMMISSION_PCT, SALARY*COMMISSION_PCT COMMISSION
+FROM EMPLOYEES
+WHERE COMMISSION_PCT IS NOT NULL;
+
+-- 오름차순 내림차순 
+SELECT EMPLOYEE_ID, FIRST_NAME
+FROM EMPLOYEES
+ORDER BY EMPLOYEE_ID;  
+
+-- DEPARTMENT_ID 내림차순 정렬이되, 같은 값이 있으면 EMPLOYEE_ID 를 오름차순으로
+SELECT EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_ID
+FROM EMPLOYEES
+ORDER BY DEPARTMENT_ID DESC, EMPLOYEE_ID DESC;   
+
+-- 직원 번호, 이름, 급여, 부서번호를 급여가 높은 순으로 출력
+SELECT EMPLOYEE_ID "직원 번호", FIRST_NAME 이름, SALARY 급여, DEPARTMENT_ID 부서번호
+FROM EMPLOYEES
+ORDER BY SALARY DESC;
+
+-- 입사일이 가장 최근인 직원 순으로 직원번호, 이름, 입사일을 출력
+SELECT EMPLOYEE_ID, FIRST_NAME, HIRE_DATE
+FROM EMPLOYEES
+ORDER BY HIRE_DATE DESC;
+
+-- 부서번호가 20, 50번 부서에서 근무하는 모든 사원들의 이름, 부서번호, 급여를 이름의 알파벳순 정렬
+SELECT FIRST_NAME, DEPARTMENT_ID, SALARY
+FROM EMPLOYEES 
+WHERE DEPARTMENT_ID = 20 OR DEPARTMENT_ID = 50
+ORDER BY FIRST_NAME;
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------
+
+-- 테이블 생성
+CREATE TABLE EMP01(
+    EMPNO NUMBER(4),        -- 사원 번호 
+    ENAME VARCHAR2(20),     -- 사원 이름
+    SAL NUMBER(7, 2)         -- 급여
+);
+    
+-- HR 사용자가 가진 객체(테이블, 뷰...) 확인 
+SELECT * FROM TAB;  -- 모든 탭을 보여주세요 
+
+DESC EMP01;     -- 테이블 구조 확인 
+
+
+-- 기존 테이블을 복사하여 테이블 생성.
+CREATE TABLE EMPLOYEES02
+AS
+SELECT * FROM EMPLOYEES;
+
+SELECT * FROM TAB;
+SELECT * FROM EMPLOYEES02;
+
+-- 테이블 구조 변경
+ALTER TABLE EMP01
+ADD(JOB VARCHAR2(9));
+-- 변경 확인
+DESC EMP01; 
+
+        
+        -- <문제> : 이미 존재하는 EMP01 테이블에 입사일 칼럼(CREDATE)을 날짜형으로 추가하라 
+        ALTER TABLE EMP01 
+        ADD(CREDATE DATE);
+        DESC EMP01;
+    
+
+-- 직급을 최대 30자까지 입력할 수 있도록 크기 수정 
+ALTER TABLE EMP01
+MODIFY(JOB VARCHAR2(30));
+
+-- 직급을 제약조건으로 NULL -> NOT NULL로 수정 
+ALTER TABLE EMP01
+MODIFY(JOB VARCHAR2(30) NOT NULL);
+DESC EMP01;
+
+--컬럼명 변경. (CREDATE -> REGDATE)
+ALTER TABLE EMP01
+RENAME COLUMN CREDATE TO REGDATE;
+DESC EMP01;
+
+--컬럼 삭제 
+ALTER TABLE EMP01
+DROP COLUMN JOB;
+DESC EMP01;
+
+--테이블 삭제 (휴지통)
+DROP TABLE EMP01;
+SELECT * FROM TAB;
+
+-- 테이블 삭제 (휴지통에서도 삭제)
+(DROP TABLE EMP01 PURGE;)
+
+
+
+---------- 휴지통 ------------------
+-- RECYCLEBBIN 구조 확인
+DESC RECYCLEBIN;
+-- 휴지통 보기 
+SELECT * FROM recyclebin;
+
+-- 휴지통 비우기 (함부로 하지 말라고 괄호로 막아둠)
+(PURGE RECYCLEBIN;)   
+
+-- 휴지통 복원 
+FLASHBACK TABLE EMP01 TO BEFORE DROP;
+SELECT * FROM TAB;
+
+-- 휴지통 복원, 이름 바꾸기.
+FLASHBACK TABLE EMP01 TO BEFORE DROP
+RENAME TO EMP02;
+SELECT * FROM TAB;
+
+
+
+
+--------------------------------------CREAT----------------------------------------------------
+
+CREATE TABLE MEMBER
+(
+ID               NUMBER(20)        NOT NULL  PRIMARY KEY,
+NAME          VARCHAR2(20)    NOT NULL,
+REGNO         CHAR(8)            NOT NULL, 
+HP              VARCHAR2(13)     NOT NULL, 
+ADDRESS     VARCHAR2(100)    NOT NULL
+);
+
+ALTER TABLE MEMBER 
+MODIFY (ID VARCHAR2(20));
+
+DESC MEMBER;
+
+CREATE TABLE BOOK
+(
+CODE     NUMBER(4)         NOT NULL   PRIMARY KEY, 
+TITLE       VARCHAR2(100)  NOT NULL,
+COUNT   NUMBER(6)        NOT NULL,
+PRICE    NUMBER(10)        NOT NULL,
+PUBLISH  VARCHAR2(50)     NOT NULL
+);
+
+CREATE TABLE BOOK_ORDER
+(
+NO           VARCHAR2(10)    NOT NULL   PRIMARY KEY, 
+ID            VARCHAR(20)      NOT NULL,
+CODE        NUMBER(4)        NOT NULL,
+COUNT      NUMBER(6)       NOT NULL,
+OR_DATE    DATE               NOT NULL
+);
+
+
+
+---------------------------- INSERT 문 -------------------------------
+
+CREATE TABLE DEPT(
+    DEPTNO NUMBER(2),
+    DNAME VARCHAR2(14),
+    LOC VARCHAR2(13)
+);
+
+SELECT * FROM TAB;
+DESC DEPT;
+SELECT * FROM DEPT;
+
+INSERT INTO DEPT(DEPTNO, DNAME, LOC)
+VALUES(10, 'ACCOUNTING', 'NEW YORK');
+
+ALTER TABLE DEPT
+MODIFY (DEPTNO NUMBER(2) NOT NULL);
+
+ALTER TABLE DEPT
+MODIFY (DNAME VARCHAR2(14) NOT NULL);
+
+-- 컬럼 생략시 디폴트 순서대로 삽입 
+INSERT INTO DEPT
+VALUES (20, 'RESEARCH', 'DALLAS');
+
+-- 암묵적 NULL 삽입
+INSERT INTO DEPT(DEPTNO, DNAME)
+VALUES (30, 'SALES');
+
+--명시적 NULL 삽입 
+INSERT INTO DEPT
+VALUES (40, 'OPERATIONS', NULL);
+
+INSERT INTO DEPT
+VALUES (50, '', 'CHICAGO');
+
+    SELECT * FROM DEPT;
+
+
+ROLLBACK;
+
+------------------------ INSERT문의 오류들 --------------------------
+--값의 수가 충분하지 않습니다
+INSERT INTO DEPT(DEPTNO, DNAME, LOC)
+VALUES (10, 'ACCOUNTING');
+
+--값의 수가 너무 많습니다
+INSERT INTO DEPT(DEPTNO, DNAME)
+VALUES(10, 'ACCOUNTING', 'NEW YORK', '20');
+
+--부적합한 식별자(이름 오류)
+INSERT INTO DEPT(NUM, DNAME, LOC)
+VALUES(10, 'ACCOUNTING', 'NEW YORK');
+
+--열을 사용할 수 없습니다 
+INSERT INTO DEPT(DEPTNO, DNAME, LOC)
+VALUES(10, ACCOUNINT, 'NEW YORK');
+
+DELETE FROM DEPT; 
+
+ALTER TABLE DEPT MODIFY(DEPTNO NUMBER(4), DNAME VARCHAR2(30));
+
+    SELECT * FROM DEPT;
+
+INSERT INTO DEPT
+SELECT DEPARTMENT_ID, DEPARTMENT_NAME, LOCATION_ID 
+FROM DEPARTMENTS;
+
+-- 기존 테이블의 구조와 데이터 복사하여 새로운 테이블 생성
+-- CREATE TABLE 테이블명 AS SELECT 칼럼명 FROM 기존테이블명
+
+-- 기존 테이블의 구조만 복사하여 새로운 테이블 생성.
+-- CREAT TABLE 테이블명 AS SELECT 컬럼명 FROM 기존테이블명 WHERE 1 = 0
+
+
+
+
+
+----------------------------------- 고객 테이블 구조 만들기 --------------------------------
+
+-- 테이블 생성
+CREATE TABLE TB_CUSTOMER
+(
+    CUSTOMER_CD     CHAR(7)          NOT NULL   PRIMARY KEY,           
+    CUSTOMER_NM    VARCHAR2(15) NOT NULL, 
+    MW_FLG              CHAR(1)          NOT NULL, 
+    BIRTH_DAY           CHAR(8)          NOT NULL, 
+    PHONE_NUMBER   VARCHAR2(16),
+    EMAIL                 VARCHAR2(50),
+    TOTAL_POINT       NUMBER(10),
+    REG_DTTM           CHAR(14)
+);
+
+DESC TB_CUSTOMER;
+
+    SELECT * FROM TAB;
+
+INSERT INTO TB_CUSTOMER
+VALUES (2017042, '강원진', 'M', 19810603, '010-8202-8790', 'wjgang@navi.com', 280300, 20170123132432); 
+
+INSERT INTO TB_CUSTOMER
+VALUES (2017053, '나경숙', 'W', 19891225, '010-4590-0043', 'ksna#boram.co.rk', 4500, 20170210180930); 
+
+INSERT INTO TB_CUSTOMER
+VALUES (2017108, '박승대', 'M', 19711430, '', 'sdpark@haso.com', 23450, 20170508203450); 
+
+    SELECT * FROM TB_CUSTOMER;
+
+-- 한 행만 삭제 
+DELETE TB_CUSTOMER
+WHERE CUSTOMER_CD = '2017053';
+
+
+
+
+
+
+------------------------------------------ INSERT ALL --------------------------------------------
+
+-- EMP01테이블에 EMPLOYEES 테이블에서 부서코드가 30인 직원의 사번, 이름, 소속부서, 입사일을 삽입.
+-- EMP_MANAGER 테이블에 EMPLOYEES 테이블의 부서코드가 30인 직원의 사번, 이름, 관리자 사번을 조회하여 삽입하고자 한다
+
+CREATE TABLE EMP01
+AS
+SELECT EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_ID, HIRE_DATE 
+FROM EMPLOYEES
+WHERE 1 = 0; 
+    
+    SELECT * FROM TAB;
+
+CREATE TABLE EMP_MANAGER
+AS
+SELECT EMPLOYEE_ID, FIRST_NAME, MANAGER_ID
+FROM EMPLOYEES
+WHERE 1 = 0;
+    
+INSERT ALL 
+
+INTO EMP01
+VALUES (EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_ID, HIRE_DATE)
+
+INTO EMP_MANAGER
+VALUES (EMPLOYEE_ID, FIRST_NAME, MANAGER_ID)
+
+SELECT EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_ID, HIRE_DATE, MANAGER_ID
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID = 30;
+
+    SELECT * FROM EMP01;
+    SELECT * FROM EMP_MANAGER;
+    SELECT * FROM EMPLOYEES;
+
+
+
+
+
+
+------------------------------------------------------------------
+
+--EMPLOYEES 테이블의 구조를 복사하여 사번, 이름, 입사일, 급여를 저장할 수 있는 테이블 EMP_OLD와 EMP_NEW 생성하고자 한다.
+--EMPLOYEES 테이블의 입사일 기준으로 2006년 1월 1일 이전에 입사한 사원의 사번, 이름, 입사일, 급여를 조회해서 
+--EMP_OLD 테이블에 삽입하고 그 후에 입사한 사원의 정보는 EMP_NEW 테이블에 삽입하고자 한다.
+
+
+CREATE TABLE EMP_OLD
+AS
+SELECT EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, SALARY
+FROM EMPLOYEES
+WHERE 1=0; 
+
+CREATE TABLE EMP_NEW
+AS
+SELECT EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, SALARY
+FROM EMPLOYEES
+WHERE 1=0; 
+
+
+INSERT ALL 
+
+WHEN HIRE_DATE < '2006/01/01' THEN
+    INTO EMP_OLD
+    VALUES (EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, SALARY)
+WHEN HIRE_DATE >= '2006/01/01' THEN
+    INTO EMP_NEW
+    VALUES (EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, SALARY)
+    
+SELECT EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, SALARY
+FROM EMPLOYEES;
+
+
+-------------------------- 임시 테이블 DUAL --------------------------
+DESC DUAL;
+SELECT 100+4 FROM DUAL;
+SELECT SYSDATE FROM DUAL;
+SELECT TO_CHAR (SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AS NOWDATE FROM DUAL;
+    
+    
+-- DUAL과 INSERT ALL을 이용하여 한방에 넣기
+
+-- 일단 기존 데이터 삭제. 
+DELETE TB_CUSTOMER;
+
+INSERT ALL
+INTO TB_CUSTOMER (CUSTOMER_CD, CUSTOMER_NM, MW_FLG, BIRTH_DAY, PHONE_NUMBER, EMAIL, TOTAL_POINT, REG_DTTM)
+VALUES (2017042, '강원진', 'M', 19810603, '010-8202-8790', 'wjgang@navi.com', 280300, 20170123132432) 
+INTO TB_CUSTOMER
+VALUES (2017053, '나경숙', 'W', 19891225, '010-4590-0043', 'ksna#boram.co.rk', 4500, 20170210180930) 
+INTO TB_CUSTOMER
+VALUES (2017108, '박승대', 'M', 19711430, '', 'sdpark@haso.com', 23450, 20170508203450)
+SELECT * FROM DUAL;
+
+    SELECT * FROM TB_CUSTOMER;
+
+
+
+--------------------------------- 내용수정 : UPDATE 문-------------------------------
+CREATE TABLE EMP
+AS
+SELECT * FROM EMPLOYEES;
+
+    SELECT * FROM EMP;
+    
+ UPDATE EMP 
+ SET DEPARTMENT_ID = 30; 
+    
+    SELECT * FROM EMP;
+    
+UPDATE EMP
+SET SALARY = SALARY * 1.1;
+
+UPDATE EMP
+SET HIRE_DATE = SYSDATE;
+
+    ROLLBACK;
+
+
+-- 부서번호가 10번인 사원을 30번으로 수정
+UPDATE EMP
+SET DEPARTMENT_ID = 30
+WHERE DEPARTMENT_ID = 10;
+
+
+-- 급여가 3000 이상인 사원만 급여 10% 인상
+UPDATE EMP
+SET SALARY = SALARY * 1.1
+WHERE SALARY >= 3000;
+
+    SELECT * FROM EMP;
+
+-- 2007년 입사한 사원의 입사일을 오늘로 수정해보자
+SELECT * FROM EMP WHERE HIRE_DATE BETWEEN '07/01/01' AND '07/12/31';
+SELECT * FROM EMP WHERE SUBSTR(HIRE_DATE, 1, 2) = '07'; 
+SELECT * FROM EMP WHERE TO_CHAR(HIRE_DATE, 'YYYY') = '2007';
+SELECT * FROM EMP WHERE EXTRACT(YEAR FROM HIRE_DATE)='2007';
+
+--년도만 추출하고자 할때 
+SELECT HIRE_DATE, SUBSTR(HIRE_DATE, 1, 2) FROM EMP;
+
+
+UPDATE EMP
+SET HIRE_DATE = SYSDATE
+WHERE HIRE_DATE BETWEEN '07/01/01' AND '07/12/31'; 
+
+UPDATE EMP
+SET HIRE_DATE = SYSDATE
+WHERE SUBSTR(HIRE_DATE, 1, 2) = '07'; 
+
+
+---Susan의 부서번호는 20번으로, 직급은 FI_MGR로 변경 
+SELECT * FROM EMP 
+WHERE FIRST_NAME = 'Susan';
+
+UPDATE EMP 
+SET DEPARTMENT_ID = 20, JOB_ID = 'FI_MGR'
+WHERE FIRST_NAME = 'Susan'; 
+
+SELECT * FROM EMP WHERE FIRST_NAME = 'Susan'; 
+
+
+
+-- 성이 Russell 인 사원의 급여를 17000 으로, 커미션 비율은 0.45로
+SELECT * FROM EMP WHERE LAST_NAME = 'Russell';
+
+UPDATE EMP 
+SET SALARY = 17000, COMMISSION_PCT = 0.45
+WHERE LAST_NAME = 'Russell'; 
+
+
+-- <문제> TB_CUSTOMER 테이블에서 박승대 고객의 생년월일을  19711230인데 잘못입력하여
+-- 19711430을 입력하였다 생년월일을 수정해 주세요.
+SELECT * FROM TB_CUSTOMER;
+
+UPDATE TB_CUSTOMER 
+SET BIRTH_DAY = 19711230
+WHERE CUSTOMER_CD = 2017108;    -- 이름으로 찾으면 동명이인이 있을 수 있다. 기본키(PK)로 찾아야 한다. 
+
+
+
+
+-----------------------------------DELETE 문--------------------------------------
+---- 전체삭제
+DELETE FROM DEPT;
+SELECT * FROM DEPT;
+
+
+ROLLBACK;
+
+
+----30번 부서만 삭제 
+DELETE FROM DEPT 
+WHERE DEPTNO = 30;
+
+    SELECT * FROM DEPT;
+
+
+---------------------------------- 요약 --------------------------------------
+-- 데이터 입력 
+--INSERT INTO 테이블명 
+--VALUE ('문자', 숫자, '날짜'); 
+
+-- 데이터 수정 
+-- UPDATE 테이블명
+-- SET 컬럼명 = '값',
+-- WHERE 조건문;
+-- 조건문 => 기본키 컬럼 = 값
+
+-- 데이터 삭제
+-- DELETE FROM 테이블명
+-- WHERE 조건문;
+-- 조건문 => 기본키컬럼 = 값
+
+-- 데이터 조회 
+-- SELECT 컬럼명1, 컬럼명2.. AS 별칭, 컬럼명 별칭(공백포함, 특수문자, 대소문자 구문 => "")
+-- FROM 테이블명
+-- WHERE 조건문 => 별칭X
+-- ORDER BY 컬럼명 ASC/DESC, 순번(1,2,..) ASC/DESC, 별칭 ASC/DESC
+
+-- NULL WHERE 컬럼명 = NULL; X
+-- IS NULL
+-- IS NOT NULL 
+
+
+-- ------------------------------------예제--------------------------------------
+
+DROP TABLE EMP01;
+
+CREATE TABLE EMP01(
+    EMPNO   NUMBER(4)      NOT NULL,
+    ENAME    VARCHAR2(10) NOT NULL,
+    JOB        VARCHAR2(9),
+    MGRNO   NUMBER(4),
+    HIREDATE DATE             NOT NULL,
+    SAL         NUMBER(7, 2)  NOT NULL,
+    COMM    NUMBER(7, 2),
+    DEPTNO  NUMBER(2)       NOT NULL
+    );
+
+    SELECT * FROM EMP01;
+
+INSERT INTO EMP01
+VALUES (7369, 'SMITH', 'CLEAK', 7839, '80/12/17', 800, '', 20); 
+INSERT INTO EMP01
+VALUES (7499, 'ALLEN', 'SALESMAN', 7839, '87/12/20', 1600, 300, 30); 
+INSERT INTO EMP01
+VALUES (7839, 'KING', 'PRESIDENT', '', '81/02/08', 5000, '', 10); 
+
+ INSERT INTO MEMBER
+ VALUES ('javauser', '홍길동', 19701001, '010-5690-2510', '서울특별시 동작구 흑석 3동 140-3');
+ INSERT INTO MEMBER
+ VALUES ('frontend01', '김철수', 19990528, '010-7825-1983', '평택시 비전 1동 118-36');
+ INSERT INTO MEMBER
+ VALUES ('backend09', '이희진', 19951111, '010-6724-2412', '인천광역시 남동구 간석동 264-11');
+
+ INSERT INTO BOOK
+ VALUES (1001, '마흔에 읽는 쇼펜하우어', 7, 17000, '유노북스');
+INSERT INTO BOOK
+ VALUES (1002, '삶이 흔들릴 때 뇌과학을 읽습니다', 5, 18000, '힉스');
+INSERT INTO BOOK
+ VALUES (1003, '무엇이 나를 행복하게 만드는가', 10, 19200, '북플레저');
+ 
+
+
+ -- BOOK_ORDER 테이블의 NO컬럼의 길이수를 15로 수정하시오. 
+ALTER TABLE BOOK_ORDER   
+MODIFY(NO NUMBER(19));
+ 
+
+
+INSERT INTO BOOK_ORDER
+VALUES (202411260010001, 'javauser', 1002, 1, SYSDATE);
+INSERT INTO BOOK_ORDER
+VALUES (202411260010002, 'backend09', 1003, 1, SYSDATE);
+INSERT INTO BOOK_ORDER
+VALUES (202411260010003, 'frontend01', 1001, 1, SYSDATE);
+
+    SELECT * FROM BOOK_ORDER;
+
+
+
+
+-------------------------------MERGE 문----------------------------------
+
+CREATE TABLE TB_ADD_CUSTOMER (
+    CUSTOMER_CD     CHAR(7 BYTE)           NOT NULL,
+    CUSTOMER_NM     VARCHAR2(10 BYTE)  NOT NULL,
+    MW_FLG              CHAR(1 BYTE)           NOT NULL,
+    BIRTH_DAY           CHAR(8 BYTE)           NOT NULL,
+    PHONE_NUMBER    VARCHAR2(16 BYTE),
+    CONSTRAINT TB_ADD_CUSTOMER_CUSTOMER_CD_PK PRIMARY KEY(CUSTOMER_CD)  -- CONTRAINT : 제약조건 선언
+);
+
+INSERT INTO TB_ADD_CUSTOMER(customer_cd, customer_nm, mw_flg, birth_day, phone_number)
+VALUES ( '2017108', '박승대', 'M', '19711230', '010-2580-9919' );
+INSERT INTO TB_ADD_CUSTOMER(customer_cd, customer_nm, mw_flg, birth_day, phone_number)
+VALUES ( '2019302', '전미래', 'W', '19740812', '010-8864-0232');
+
+-- TB_ADD_CUSTOMER 테이블의 내용을 TB_CUSTOMER 테이블과 비교하여 
+-- 데이터가 있을 경우 업데이트 하고 데이터가 없을 경우 입력되도록 쿼리문을 작성한다.
+
+    SELECT * FROM TB_CUSTOMER;  -- 위에서 만든 거 
+    SELECT * FROM TB_ADD_CUSTOMER;
+
+MERGE INTO TB_CUSTOMER CU
+    USING TB_ADD_CUSTOMER NC
+    ON (CU.CUSTOMER_CD = NC.CUSTOMER_CD)
+    WHEN MATCHED THEN 
+        UPDATE SET CU.CUSTOMER_NM = NC.CUSTOMER_NM,
+            CU.MW_FLG = NC.MW_FLG,
+            CU.BIRTH_DAY = NC.BIRTH_DAY,
+            CU.PHONE_NUMBER = NC.PHONE_NUMBER
+    WHEN NOT MATCHED THEN 
+        INSERT (CU.CUSTOMER_CD, CU.CUSTOMER_NM, CU.MW_FLG, CU.BIRTH_DAY,
+            CU.PHONE_NUMBER, CU.EMAIL, CU.TOTAL_POINT, CU.REG_DTTM)
+        VALUES (NC.CUSTOMER_CD, NC.CUSTOMER_NM, NC.MW_FLG, NC.BIRTH_DAY,
+            NC.PHONE_NUMBER,                                '', 0, TO_CHAR(SYSDATE, 'YYYYMMDDHHMISS'));
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+
+-- 1. employees 테이블에서 부서 인원이 5명보다 많은 부서의 부서번호, 인원수, 급여의 합을 출력하라
+
+SELECT DEPARTMENT_ID, COUNT(*), SUM(SALARY)
+FROM EMPLOYEES
+GROUP BY DEPARTMENT_ID
+HAVING COUNT(*)>5
+ORDER BY DEPARTMENT_ID;
+
+
+
+
+-- 2. employees 테이블을 사용하여 사원 중에서 급여와 보너스를 합친 금액이 가장 많은 경우와 작은 경우, 
+-- 평균 금액을 구하세요. 단, 보너스가 없을 경우 0으로, 출력 금액은 모두 소수점 첫째 자리까지 표시. 
+
+SELECT MAX(SALARY + (SALARY * NVL(COMMISSION_PCT, 0))) MAX, 
+MIN(SALARY + (SALARY * NVL(COMMISSION_PCT, 0))) MIN,
+ROUND(AVG(SALARY + (SALARY * NVL(COMMISSION_PCT, 0))), 1) AVG
+FROM EMPLOYEES;
+
+
+
+
+-- 3. employees 테이블에서 부서번호가 10인 사원수부터 부서번호가 50인 사원수까지 각각 출력하라. 
+
+--3.1 부서별 사원 수를 행으로 표현. 
+SELECT DEPARTMENT_ID, COUNT(*) AS 사원수
+FROM EMPLOYEES
+WHERE DEPARTMENT_ID IN (10, 20, 30, 40, 50)
+GROUP BY DEPARTMENT_ID
+ORDER BY DEPARTMENT_ID;
+
+--3.2 부서별 사원 수를 열로 표현.
+SELECT
+    COUNT(DECODE(DEPARTMENT_ID, 10, 1)) "10번부서인원수",
+    COUNT(DECODE(DEPARTMENT_ID, 20, 1)) "20번부서인원수",
+    COUNT(DECODE(DEPARTMENT_ID, 30, 1)) "30번부서인원수",
+    COUNT(DECODE(DEPARTMENT_ID, 40, 1)) "40번부서인원수",
+    COUNT(DECODE(DEPARTMENT_ID, 50, 1)) "50번부서인원수"
+FROM EMPLOYEES;
+
+SELECT
+    SUM(CASE WHEN DEPARTMENT_ID = 10 THEN 1 ELSE 0 END) AS "10번부서인원수",
+    SUM(CASE WHEN DEPARTMENT_ID = 20 THEN 1 ELSE 0 END) AS "20번부서인원수",
+    SUM(CASE WHEN DEPARTMENT_ID = 30 THEN 1 ELSE 0 END) AS "30번부서인원수",
+    SUM(CASE WHEN DEPARTMENT_ID = 40 THEN 1 ELSE 0 END) AS "40번부서인원수",
+    SUM(CASE WHEN DEPARTMENT_ID = 50 THEN 1 ELSE 0 END) AS "50번부서인원수"
+FROM EMPLOYEES;
+
+
+
+
+
+
+
+
+
