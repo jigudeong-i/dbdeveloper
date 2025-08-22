@@ -91,8 +91,38 @@ insert into book (title, author, publisher, publish_date, price)
 values ('어린왕자', '생택쥐페리', '우리책', '1999-01-24', 5000);
 insert into book (title, author, publisher, publish_date, price)
 values ('하이킹걸스', '신일용', '닥장', '2003-08-11', 10000);
+insert into book (title, author, publisher, publish_date, price)
+values ('위저드베이커리', '김일신', '보이드', '2011-12-19', 17000);
 
 select * from book;
 
+select * from student;
 
+
+
+
+
+
+
+
+
+select * from subject;
+
+--학번 구하기
+select
+    to_char(sysdate, 'YY') || s.s_num ||
+    lpad(nvl(max(to_number(substr(st.sd_num, 5))), 0) + 1, 4, '0') as student_number
+from subject s left join student st
+on s.s_num = st.s_num
+where s.s_num = '01'
+group by s.s_num;
+
+--아이디 중복 체크 
+select case
+    when exists(select 1 from student where sd_id = 'javajspl')
+    then 1
+    else 0
+    end as result
+from dual;
+        
 
