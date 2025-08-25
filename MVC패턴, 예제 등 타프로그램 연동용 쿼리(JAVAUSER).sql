@@ -96,15 +96,15 @@ values ('위저드베이커리', '김일신', '보이드', '2011-12-19', 17000);
 
 select * from book;
 
+
+
+
+
+
+
+
+
 select * from student;
-
-
-
-
-
-
-
-
 
 select * from subject;
 
