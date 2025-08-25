@@ -71,8 +71,8 @@ insert into student(no, sd_num, sd_name, sd_id, sd_passwd, s_num, sd_birth, sd_p
 values(student_seq.nextval, '08020001','안익태', 'korea', 'korea99', '02', '19880805', '01084522895','(06181) 서울 강남구 테헤란로98길 12','korea@nate.com');
 
     SELECT * FROM STUDENT;
-    --DROP TABLE STUDENT;   
-    --DROP SEQUENCE STUDENT_SEQ;
+    DROP TABLE STUDENT;   
+    DROP SEQUENCE STUDENT_SEQ;
     
     -- 제약조건 확인
     SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME, R_CONSTRAINT_NAME
@@ -163,7 +163,6 @@ INSERT INTO ENROLLMENT(NO, E_YEAR, E_SEMESTER, SD_NUM, C_NUM, E_GRADE)
 VALUES(ENROLLMENT_SEQ.NEXTVAL, '2004', '1학기', '08020001', 'UGG0031', 3.6);
 
     SELECT * FROM ENROLLMENT;
-    drop table enrollment;
 
 
 

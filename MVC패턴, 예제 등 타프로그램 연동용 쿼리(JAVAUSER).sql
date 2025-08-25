@@ -96,7 +96,17 @@ values ('위저드베이커리', '김일신', '보이드', '2011-12-19', 17000);
 
 select * from book;
 
+
+
 select * from student;
+
+-- 집 pc에 데이터가 없어서 넣어둠. 
+insert into student (no, sd_num, sd_name, sd_id, sd_passwd, s_num, sd_birth, sd_phone, sd_address, sd_email, sd_date)
+values (1, '06010001', '김정수', 'javajsp', 1234, '01', '19870398', '01033452264', '(03473) 서대문구 성산로 450-2', 'java12@naver.com', '2025-07-27');
+insert into student (no, sd_num, sd_name, sd_id, sd_passwd, s_num, sd_birth, sd_phone, sd_address, sd_email, sd_date)
+values (2, '07032201', '박지원', 'ddkfj', 3344, '02', '19220111', '01000985785', '(02233) 동대문구 장한로 18', 'ffkdlf@naver.com', '2024-11-20');
+insert into student (no, sd_num, sd_name, sd_id, sd_passwd, s_num, sd_birth, sd_phone, sd_address, sd_email, sd_date)
+values (3, '23011101', '배철수', 'apple', 4421, '02', '20000318', '01000097563', '(13233) 은평구 갈현로 21', 'slslsl@naver.com', '2019-12-01');
 
 
 
