@@ -98,6 +98,7 @@ select * from book;
 
 
 
+<<<<<<< HEAD
 select * from student;
 
 -- 집 pc에 데이터가 없어서 넣어둠. 
@@ -116,6 +117,15 @@ values (3, '23011101', '배철수', 'apple', 4421, '02', '20000318', '0100009756
 
 
 
+=======
+
+
+
+
+
+select * from student;
+
+>>>>>>> 778971a83a6286409ec851527f8a5d573d07fbe8
 select * from subject;
 
 --학번 구하기
