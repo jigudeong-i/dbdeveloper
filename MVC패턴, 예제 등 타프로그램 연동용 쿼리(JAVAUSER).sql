@@ -103,7 +103,6 @@ select * from book;
 
 
 
-
 select * from student;
 
 select * from subject;
