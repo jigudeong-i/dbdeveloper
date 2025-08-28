@@ -97,10 +97,6 @@ values ('위저드베이커리', '김일신', '보이드', '2011-12-19', 17000);
 select * from book;
 
 
-
-<<<<<<< HEAD
-select * from student;
-
 -- 집 pc에 데이터가 없어서 넣어둠. 
 insert into student (no, sd_num, sd_name, sd_id, sd_passwd, s_num, sd_birth, sd_phone, sd_address, sd_email, sd_date)
 values (1, '06010001', '김정수', 'javajsp', 1234, '01', '19870398', '01033452264', '(03473) 서대문구 성산로 450-2', 'java12@naver.com', '2025-07-27');
@@ -111,21 +107,7 @@ values (3, '23011101', '배철수', 'apple', 4421, '02', '20000318', '0100009756
 
 
 
-
-
-
-
-
-
-=======
-
-
-
-
-
 select * from student;
-
->>>>>>> 778971a83a6286409ec851527f8a5d573d07fbe8
 select * from subject;
 
 --학번 구하기
@@ -145,4 +127,55 @@ select case
     end as result
 from dual;
         
+        
+        
+        
+        
+
+-- [백엔드] 스프링 부트(Spring Boot) 게시판 예제(첫번째 Mybatis 적용)
+
+create table spring_board(
+    b_num number not null,
+    b_name varchar2(15) not null,
+    b_title varchar2(1000) not null,
+    b_content clob,
+    b_pwd varchar2(18) not null,
+    b_date date default sysdate
+);
+
+alter table spring_board
+add constraint spring_board_pk primary key(b_num);
+
+comment on table spring_board is '게시판 정보';
+comment on column spring_board.b_num is '게시판순번';
+comment on column spring_board.b_name is '게시판작성자';
+comment on column spring_board.b_title is '게시판제목';
+comment on column spring_board.b_content is '게시판내용';
+comment on column spring_board.b_pwd is '게시판비밀번호';
+comment on column spring_board.b_date is '게시판등록일';
+
+-- 게시판 조회 수 추가 (readcnt)
+alter table spring_board
+add(b_readcnt number default 0);
+
+comment on column spring_board.b_readcnt is '게시판 조회수';
+
+create sequence spring_board_seq
+start with 1
+increment by 1
+minvalue 1
+nocycle
+cache 2;
+
+-- drop sequence spring_board_seq;
+
+select * from spring_board order by b_num desc;
+
+insert into spring_board(b_num, b_name, b_title, b_content, b_pwd, b_date)
+values (1, '박지원', '오늘 요리', '오리고기를 해볼거에요', '1234', '2025-08-28');
+insert into spring_board(b_num, b_name, b_title, b_content, b_pwd, b_date)
+values (2, '홍길동', '운동기록', '상체와 하체 3세트씩', '5421', '2025-07-07');
+
+
+
 
