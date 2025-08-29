@@ -176,6 +176,11 @@ values (1, '박지원', '오늘 요리', '오리고기를 해볼거에요', '123
 insert into spring_board(b_num, b_name, b_title, b_content, b_pwd, b_date)
 values (2, '홍길동', '운동기록', '상체와 하체 3세트씩', '5421', '2025-07-07');
 
+select spring_board_seq.nextval from dual;
+
+
+
+
 
 
 
