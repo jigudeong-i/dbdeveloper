@@ -40,8 +40,6 @@ else 0
 end as result 
 from dual;
 
-
-
 ---------------------------- 예제 
 
 -- 공지 테이블
@@ -181,6 +179,9 @@ select spring_board_seq.nextval from dual;
 
 
 
+select * from boot_board;
+desc boot_board;
 
-
+select * from subject;
+select * from course;
 
