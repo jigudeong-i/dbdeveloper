@@ -179,7 +179,8 @@ select spring_board_seq.nextval from dual;
 
 
 
-select * from boot_board;
+select * from boot_board 
+order by no desc;
 desc boot_board;
 
 select * from subject;
