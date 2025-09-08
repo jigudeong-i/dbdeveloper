@@ -186,3 +186,9 @@ desc boot_board;
 select * from subject;
 select * from course;
 
+select * from boot_article;
+
+select * from tbl_todo;
+
+
+
