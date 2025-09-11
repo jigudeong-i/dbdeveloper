@@ -187,6 +187,7 @@ select * from subject;
 select * from course;
 
 select * from boot_article;
+select * from boot_comment;
 
 select * from tbl_todo;
 
