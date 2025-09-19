@@ -189,7 +189,13 @@ select * from course;
 select * from boot_article;
 select * from boot_comment;
 
-select * from tbl_todo;
+select * from tbl_todo
+order by tno desc;
+
+select * from member_member_role_list;
+select * from tbl_member;
+
+
 
 
 
